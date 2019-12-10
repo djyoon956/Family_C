@@ -11,11 +11,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
-@Aspect //Aspect 역할을 할 클래스라고 명시해줌
+@Aspect
 public class DBAop {
- 
 	Log log = LogFactory.getLog(this.getClass());
-    //Pointcut이라고 명시된 메서드가 필요
+	
     //@Pointcut의 속성에 핵심코드의 어느 부분까지 공통기능을 사용하겠다고 명시
     @Pointcut("within(com.dao.*)")
     private void pointcutMethod(){ }
@@ -27,8 +26,11 @@ public class DBAop {
     	
     	Object obj = null;
     	try {
+    		log.info("["+target+"] DB CONNECTION");
     		log.info("["+target+"] START");
+    		
     		obj = joinpoint.proceed();
+    		
     		log.info("["+target+"] END");
     		log.info("["+target+"] DB COMMIT");
     	} catch (Exception e) {
@@ -55,6 +57,6 @@ public class DBAop {
     
     @AfterReturning("pointcutMethod()")
     public void afterReturningMethod(){
-    	log.info("---------------------AfterReturning----------------------");
+    	log.info("afterReturningMethod start");
     }
 }
