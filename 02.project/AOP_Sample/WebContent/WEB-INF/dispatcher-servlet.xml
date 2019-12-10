@@ -16,7 +16,7 @@
 <aop:aspectj-autoproxy/>
 <context:annotation-config />
 
- <bean class="com.controller.MyController" />
+<bean class="com.controller.MyController" />
  
 <bean id="dbAop" class="com.aop.DBAop" />
 <bean id="dao" class="com.dao.TestDao"/>
