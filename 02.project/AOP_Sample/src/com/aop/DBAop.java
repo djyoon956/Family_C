@@ -21,7 +21,7 @@ public class DBAop {
 
     @Around("pointcutMethod()") 
     public Object DbProcess(ProceedingJoinPoint joinpoint) throws Throwable{
-    	String target= joinpoint.getSignature().getName();
+    	String target= joinpoint.getSignature().getName(); //getSignature() : 호출되는 메서드에 대한 정보를 구한다. 
     	log.info("["+target+"] AROUND 시작");
     	
     	Object obj = null;
@@ -43,7 +43,7 @@ public class DBAop {
     	return obj;
     }
 
-    
+
     @Before("pointcutMethod()")
     public void beforeMethod(){
     	log.info("beforeMethod() start");
