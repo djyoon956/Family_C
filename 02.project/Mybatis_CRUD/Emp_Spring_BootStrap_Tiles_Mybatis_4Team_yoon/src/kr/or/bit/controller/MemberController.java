@@ -1,7 +1,7 @@
 package kr.or.bit.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +31,6 @@ public class MemberController {
 		EmpDao dao = sqlSession.getMapper(EmpDao.class);
 		model.addAttribute("deptnos", dao.getDethNos());
 		model.addAttribute("jobs", dao.getJobRegister());
-		List<Emp> emps = dao.getEmps();
 		model.addAttribute("emps", dao.getEmps());
 
 		return "/WEB-INF/views/admin/MemberAdd.jsp";
@@ -41,6 +40,8 @@ public class MemberController {
 	public String memberAddOk(Emp emp, HttpServletRequest request, Model model) {
 		try {
 			String uploadpath = request.getServletContext().getRealPath("upload");
+			checkDirectory(uploadpath);
+			
 			String imagefilename = emp.getMultipartFile().getOriginalFilename();
 			String fpath = uploadpath + "\\" + imagefilename;
 
@@ -69,12 +70,13 @@ public class MemberController {
 
 			model.addAttribute("board_msg", msg);
 			model.addAttribute("board_url", url);
+			model.addAttribute("board_result", result > 0);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
-		return "/common/redirect.jsp";
+		return "/common/Redirect.jsp";
 	}
 
 	@RequestMapping("/MemberList.do")
@@ -106,10 +108,8 @@ public class MemberController {
 
 	@RequestMapping("/MemberEdit.do")
 	public String showEditView(int empno, Model model) {
-
 		EmpDao dao = sqlSession.getMapper(EmpDao.class);
 		try {
-
 			Emp emp = dao.getEmpByEmpno(empno);
 			model.addAttribute("emp", emp);
 
@@ -120,32 +120,49 @@ public class MemberController {
 		// select box 데이터
 		model.addAttribute("deptnos", dao.getDethNos());
 		model.addAttribute("jobs", dao.getJobRegister());
-		List<Emp> emps = dao.getEmps();
 		model.addAttribute("emps", dao.getEmps());
+
 		return "/WEB-INF/views/admin/MemberEdit.jsp";
 	}
 
 	@RequestMapping("MemberEditOk.do")
-	public String editOk(Emp emp, HttpServletRequest request) {
-		System.out.println("in edit ok");
+	public String editOk(Emp emp, HttpServletRequest request, Model model) {
+		String msg = "";
+		String url = "";
+		boolean result = false;
 		try {
 			EmpDao dao = sqlSession.getMapper(EmpDao.class);
-			String uploadpath = request.getServletContext().getRealPath("upload");
+
 			String imagefilename = emp.getMultipartFile().getOriginalFilename();
-			String fpath = uploadpath + "\\" + imagefilename;
 
 			if (!imagefilename.equals("")) { // 실 파일 업로드
+				String uploadpath = request.getServletContext().getRealPath("upload");
+				checkDirectory(uploadpath);
+				
+				String fpath = uploadpath + "\\" + imagefilename;
+
 				FileOutputStream fs = new FileOutputStream(fpath);
 				fs.write(emp.getMultipartFile().getBytes());
 				fs.close();
+				emp.setImagefilename(imagefilename);
 			}
-
-			emp.setImagefilename(imagefilename);
+			System.out.println(emp);
 			dao.updateEmp(emp);
+
+			msg = "수정 완료! 상세 페이지로 이동합니다.";
+			url = "MemberDetail.do?empno=" + emp.getEmpno();
+			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			msg = "수정 실패! 관리 페이지로 이동합니다.";
+			url = "MemberList.do";
 		}
-		return "/MemberList.do";
+
+		model.addAttribute("board_msg", msg);
+		model.addAttribute("board_url", url);
+		model.addAttribute("board_result", result);
+
+		return "/common/Redirect.jsp";
 	}
 
 	@RequestMapping("/MemberDelete.do")
@@ -162,7 +179,14 @@ public class MemberController {
 
 		model.addAttribute("board_msg", msg);
 		model.addAttribute("board_url", url);
+		model.addAttribute("board_result", row > 0);
 
-		return "/common/redirect.jsp";
+		return "/common/Redirect.jsp";
+	}
+
+	private void checkDirectory(String path) {
+		File file = new File(path);
+		if (!file.exists())
+			file.mkdir();
 	}
 }

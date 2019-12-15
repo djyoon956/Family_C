@@ -50,8 +50,6 @@ public class Emp {
 	}
 
 	public String getHiredate() {
-		System.out.println("in get " + hiredate);
-
 		return new SimpleDateFormat("yyyy-MM-dd").format(hiredate);
 	}
 

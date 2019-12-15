@@ -30,12 +30,11 @@ public class LoginController {
 
 		try {
 			EmpDao dao = sqlSession.getMapper(EmpDao.class);
-			System.out.println("in");
 			String adminId = dao.checkAdminLogin(userid, pwd);
-			System.out.println("out");
+			
 			if (adminId != null && !adminId.isEmpty()) {
 				request.getSession().setAttribute("userid", userid);
-				view = "index.jsp";
+				view = "Index.do";
 			} else
 				view = "Login.do";
 
@@ -49,6 +48,6 @@ public class LoginController {
 	@RequestMapping("/Logout.do")
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
-		return "index.jsp";
+		return "Index.do";
 	}
 }

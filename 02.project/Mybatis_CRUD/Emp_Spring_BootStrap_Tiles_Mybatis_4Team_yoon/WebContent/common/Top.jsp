@@ -22,7 +22,7 @@
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button>
-        <a class="navbar-brand mr-1" href="index.jsp">Family C</a>
+        <a class="navbar-brand mr-1" href="Index.do">Family C</a>
         <!-- Navbar -->
         <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <li class="nav-item dropdown no-arrow">

@@ -30,7 +30,7 @@
     </style>
     <script type="text/javascript">
 	    	 $(function(){
-	    		 $("#photo").change(function(){
+	    		 $("#multipartFile").change(function(){
 	 	    		var reader = new FileReader();
 
 	 	    	    reader.onload = function (e) {
@@ -144,7 +144,7 @@
                                                     		<div class="col-md-6">
                                                         		<div class="form-label-group">
                                                             		<input type="file" id="multipartFile" name="multipartFile" class="form-control" accept="image/*">
-                                                            		<label for="photo">photo</label>
+                                                            		<label for="multipartFile">photo</label>
                                                         		</div>
                                                     		</div>
                                                 		</div>

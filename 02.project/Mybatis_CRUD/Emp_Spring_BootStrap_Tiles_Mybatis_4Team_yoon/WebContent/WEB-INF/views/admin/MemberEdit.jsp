@@ -39,7 +39,7 @@
 
     $(function(){
     	initSelectedData();
-    	 $("#photo").change(function(){
+    	 $("#multipartFile").change(function(){
     			var reader = new FileReader();
 
     		    reader.onload = function (e) {
@@ -105,7 +105,7 @@
 														<div class="form-label-group">
 															<input type="file" id="multipartFile"
 																name="multipartFile" class="form-control"
-																accept="image/*"> <label for="photo">photo</label>
+																accept="image/*"> <label for="multipartFile">photo</label>
 														</div>
 													</div>
 												</div>
