@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.bit.dao.EmpDao">
+	<insert id="insertEmp" parameterType="kr.or.bit.dto.Emp">
+		INSERT INTO EMP(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, IMAGEFILENAME)
+		VALUES(#{empno}, #{ename}, #{job}, #{mgr}, #{hiredate}, #{sal}, #{comm}, #{deptno}, #{imagefilename})
+	</insert>
+	
+	<select id="getEmpByEmpno" resultType="kr.or.bit.dto.Emp" parameterType="int">
+		SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO , IMAGEFILENAME
+			FROM EMP WHERE EMPNO = #{empno}
+	</select>
+	
+	<select id="getJobRegister" resultType="String" >
+		select distinct job from emp
+	</select>
+	
+	<select id="checkAdminLogin" resultType="String">
+		SELECT USERID FROM ADMINLIST WHERE USERID=#{param1} AND PWD=#{param2}
+	</select>
+	
+	<select id="getEmps" resultType="kr.or.bit.dto.Emp" >
+		SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
+			 FROM EMP
+	</select>
+	
+	<delete id="deleteEmpByEmpno">
+		DELETE FROM EMP WHERE EMPNO = #{empno}
+	</delete>
+	
+	<update id="updateEmp" parameterType="kr.or.bit.dto.Emp">
+		
+		UPDATE EMP SET ENAME=#{ename}
+								, JOB=#{job}
+								, MGR=#{mgr}
+								, HIREDATE=#{hiredate}
+								, SAL=#{sal}
+								, COMM=#{comm}
+								, DEPTNO=#{deptno}
+						<if test="imagefilename!=null">
+								, IMAGEFILENAME=#{imagefilename}
+						</if>
+		WHERE EMPNO=#{empno}
+	</update>
+
+	<select id="getDethNos" resultType="int">
+		SELECT DEPTNO FROM DEPT
+	</select>
+</mapper>
+
+
+
+
+
