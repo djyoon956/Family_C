@@ -44,6 +44,12 @@
 		                <a class="dropdown-item" href="MemberList.do">사원 관리</a>
 		            </div>
 		        </li>
+		        <li class="nav-item">
+		            <a class="nav-link" href="Chat.do">
+		                <i class="fas fa-sign-out-alt"></i>
+		                <span>실시간 채팅</span>
+		             </a>
+		        </li>
 		        
 		        <!-- <li class="nav-item dropdown">
 		            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
