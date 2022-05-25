@@ -5,9 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
 <properties>
-		<org.springframework-version>
-			4.2.5.RELEASE
-		</org.springframework-version>
+		<org.springframework-version>5.2.22.RELEASE</org.springframework-version>
 		<db-version>
 			11
 		</db-version>
